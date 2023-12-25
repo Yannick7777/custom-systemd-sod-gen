@@ -6,15 +6,11 @@ call_bsod() {
 	sudo /usr/lib/systemd/systemd-bsod &
 }
 
-sudo echo "Starting in 3..."
-sleep 1
-echo "2..."
-sleep 1
-echo "1..."
-sleep 1
+framefile=${1:-'frames.txt'}
+echo "Using file $framefile for SOD"
 echo "Initializing sequence."
 
-IFS='=' read -ra frames <<< $(cat frames.txt)
+IFS='=' read -ra frames <<< "$(cat "$framefile")"
 for frame in "${frames[@]}"; do
 	call_bsod "$frame"
 	sleep 0.05
